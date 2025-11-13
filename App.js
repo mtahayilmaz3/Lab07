@@ -31,6 +31,12 @@ export default function App() {
     setEnteredTaskText('');
   }
 
+  function deleteTaskHandler(id) {
+    setTasks((currentTasks) => {
+      return currentTasks.filter((task) => task.id !== id);
+    });
+  }
+
   return (
     <SafeAreaView style={styles.appContainer}>
       <View style={styles.contentContainer}>
@@ -49,7 +55,13 @@ export default function App() {
         <View style={styles.listContainer}>
           <FlatList
             data={tasks}
-            renderItem={({ item }) => <TodoItem text={item.text} />}
+            renderItem={({ item }) => (
+              <TodoItem
+                text={item.text}
+                id={item.id}
+                onDelete={deleteTaskHandler}
+              />
+            )}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={
               <Text style={styles.emptyText}>No tasks yet. Add one!</Text>
